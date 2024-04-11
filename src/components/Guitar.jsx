@@ -1,7 +1,8 @@
-import React from 'react'
+import {useEffect} from 'react'
 
-const Guitar = ({ guitarraData }) => {
+const Guitar = ({ guitarraData, addToCart }) => {
     const { name, image, description, price } = guitarraData
+
     return (
         <div className="col-md-6 col-lg-4 my-4 row align-items-center">
             <div className="col-4">
@@ -12,6 +13,7 @@ const Guitar = ({ guitarraData }) => {
                 <p>{description}</p>
                 <p className="fw-black text-primary fs-3">${price}</p>
                 <button
+                    onClick={() => addToCart(guitarraData)}
                     type="button"
                     className="btn btn-dark w-100"
                 >Agregar al Carrito</button>
