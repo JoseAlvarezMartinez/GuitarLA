@@ -8,24 +8,22 @@ function App() {
 
     function addToCart(item) {
 
-        const itemExists = cart.findIndex(itemCart => itemCart.id === item.id)
+        const itemExists = cart.findIndex(cartItem => cartItem.id === item.id)
 
         if (itemExists >= 0) {
-            const updateCart = [...cart]
-            updateCart[itemExists].quantity++
-            setCart(updateCart)
+            const cartUpdate = [...cart]
+            cartUpdate[itemExists].quantity++
+            setCart(cartUpdate)
         } else {
             item.quantity = 1;
             setCart([...cart, item])
-            console.log("Nuevo elemento")
         }
-
     }
 
 
     return (
         <>
-            <Header />
+            <Header cart={cart} />
             <main className="container-xl mt-5">
                 <h2 className="text-center">Nuestra Colección</h2>
 
@@ -38,6 +36,7 @@ function App() {
 
                 </div>
             </main>
+
 
 
             <footer className="bg-dark mt-5 py-5">
