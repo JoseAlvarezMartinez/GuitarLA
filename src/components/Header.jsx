@@ -1,16 +1,16 @@
 
 import { useMemo } from "react"
-const Header = ({ cart,deleteFromCart }) => {
+const Header = ({ cart, deleteFromCart,increaseQuantity,decreaseQuantity }) => {
 
     const isEmpty = useMemo(() => cart.length, [cart])
 
     const total = useMemo(() => cart.reduce((total, itemPrice) => total + (itemPrice.quantity * itemPrice.price), 0), [cart])
 
-    function eliminarArticulo(guitarId){
-        const {id} = guitarId
+    function eliminarArticulo(guitarId) {
+        const { id } = guitarId
         const updateCart = cart.filter(cartItem => cartItem.id !== id)
         setCart(updateCart)
-        
+
     }
 
     return (
@@ -57,15 +57,15 @@ const Header = ({ cart,deleteFromCart }) => {
                                                                 </td>
                                                                 <td className="flex align-items-start gap-4">
                                                                     <button
-
+                                                                        onClick={() => decreaseQuantity(cartItem.id)}
                                                                         type="button"
                                                                         className="btn btn-dark"
                                                                     >
                                                                         -
                                                                     </button>
-                                                                    1
+                                                                    {cartItem.quantity}
                                                                     <button
-
+                                                                        onClick={() => increaseQuantity(cartItem.id)}
                                                                         type="button"
                                                                         className="btn btn-dark"
                                                                     >
