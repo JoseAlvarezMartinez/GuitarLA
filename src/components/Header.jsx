@@ -1,10 +1,18 @@
 
-const Header = ({ cart }) => {
+import { useMemo } from "react"
+const Header = ({ cart,setCart }) => {
 
-    // State derivado
-    const isEmpty = () => cart.length === 0
+    const isEmpty = useMemo(() => cart.length, [cart])
 
-    const totalPagar = () => cart.reduce((total, item) => total + (item.price * item.quantity), 0)
+    const total = useMemo(() => cart.reduce((total, itemPrice) => total + (itemPrice.quantity * itemPrice.price), 0), [cart])
+
+    function eliminarArticulo(guitarId){
+        const {id} = guitarId
+        const updateCart = cart.filter(cartItem => cartItem.id !== id)
+        setCart(updateCart)
+        
+    }
+
     return (
         <header className="py-5 header">
             <div className="container-xl">
@@ -21,58 +29,76 @@ const Header = ({ cart }) => {
                             <img className="img-fluid" src="./public/img/carrito.png" alt="imagen carrito" />
 
                             <div id="carrito" className="bg-white p-3">
-                                {isEmpty() ? <p className="text-center">El carrito esta vacio</p> : <>
-                                    <table className="w-100 table">
-                                        <thead>
-                                            <tr>
-                                                <th>Imagen</th>
-                                                <th>Nombre</th>
-                                                <th>Precio</th>
-                                                <th>Cantidad</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {cart.map(guitar => (
-                                                <tr key={guitar.id}>
-                                                    <td>
-                                                        <img className="img-fluid" src={`./public/img/${guitar.image}.jpg`} alt="imagen guitarra" />
-                                                    </td>
-                                                    <td>{guitar.name}</td>
-                                                    <td className="fw-bold">
-                                                        ${guitar.price}
-                                                    </td>
-                                                    <td className="flex align-items-start gap-4">
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-dark"
-                                                        >
-                                                            -
-                                                        </button>
-                                                        {guitar.quantity}
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-dark"
-                                                        >
-                                                            +
-                                                        </button>
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className="btn btn-danger"
-                                                            type="button"
-                                                        >
-                                                            X
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
 
-                                    <p className="text-end">Total pagar: <span className="fw-bold">${totalPagar()}</span></p>
-                                    <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
-                                </>}
+                                {
+                                    isEmpty ? (
+                                        <>
+                                            <table className="w-100 table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Imagen</th>
+                                                        <th>Nombre</th>
+                                                        <th>Precio</th>
+                                                        <th>Cantidad</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    {
+                                                        cart.map(cartItem => (
+                                                            <tr key={cartItem.id}>
+                                                                <td>
+                                                                    <img className="img-fluid" src={`./public/img/${cartItem.image}.jpg`} alt="imagen guitarra" />
+                                                                </td>
+                                                                <td>{cartItem.name}</td>
+                                                                <td className="fw-bold">
+                                                                    ${cartItem.price}
+                                                                </td>
+                                                                <td className="flex align-items-start gap-4">
+                                                                    <button
+
+                                                                        type="button"
+                                                                        className="btn btn-dark"
+                                                                    >
+                                                                        -
+                                                                    </button>
+                                                                    1
+                                                                    <button
+
+                                                                        type="button"
+                                                                        className="btn btn-dark"
+                                                                    >
+                                                                        +
+                                                                    </button>
+                                                                </td>
+                                                                <td>
+                                                                    <button
+                                                                        onClick={() => eliminarArticulo(cartItem)}
+                                                                        className="btn btn-danger"
+                                                                        type="button"
+                                                                    >
+                                                                        X
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+
+
+                                                        ))
+                                                    }
+
+                                                </tbody>
+                                            </table>
+
+                                            <p className="text-end">Total pagar: <span className="fw-bold">${total}</span></p>
+                                            <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
+
+                                        </>
+                                    ) :
+                                        <p className="text-center">El carrito esta vacio</p>
+                                }
+
+
 
                             </div>
                         </div>
