@@ -19,10 +19,13 @@ function App() {
             guitarDescription.quantity = 1;
             setCart([...cart, guitarDescription])
         }
+    }function deleteFromCart(item){
+        const {id} = item
+        setCart(cart.filter(cartItem => cartItem.id !== id))
     }
     return (
         <>
-            <Header cart={cart} setCart={setCart}/>
+            <Header cart={cart} deleteFromCart={deleteFromCart}/>
             <main className="container-xl mt-5">
                 <h2 className="text-center">Nuestra Colección</h2>
 

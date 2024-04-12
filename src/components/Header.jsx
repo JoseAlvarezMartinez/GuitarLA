@@ -1,6 +1,6 @@
 
 import { useMemo } from "react"
-const Header = ({ cart,setCart }) => {
+const Header = ({ cart,deleteFromCart }) => {
 
     const isEmpty = useMemo(() => cart.length, [cart])
 
@@ -74,7 +74,7 @@ const Header = ({ cart,setCart }) => {
                                                                 </td>
                                                                 <td>
                                                                     <button
-                                                                        onClick={() => eliminarArticulo(cartItem)}
+                                                                        onClick={() => deleteFromCart(cartItem)}
                                                                         className="btn btn-danger"
                                                                         type="button"
                                                                     >
